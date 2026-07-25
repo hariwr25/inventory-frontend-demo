@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login · Inventaris</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+        body { background: #f9fafc; }
+        .glass-panel { backdrop-filter: blur(2px); background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.04); }
+        .demo-badge { transition: all 0.2s; }
+        .demo-badge:hover { background: #f1f5f9; }
+        
+        /* Laravel-style flash messages */
+        .alert {
+            animation: slideDown 0.3s ease-out;
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* GitHub corner ribbon */
+        .github-corner:hover .octo-arm {
+            animation: octocat-wave 560ms ease-in-out;
+        }
+        @keyframes octocat-wave {
+            0%, 100% { transform: rotate(0); }
+            20%, 60% { transform: rotate(-25deg); }
+            40%, 80% { transform: rotate(10deg); }
+        }
+        @media (max-width: 500px) {
+            .github-corner:hover .octo-arm {
+                animation: none;
+            }
+            .github-corner .octo-arm {
+                animation: octocat-wave 560ms ease-in-out;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased text-[#0b1120]">
+
+<!-- GitHub Corner Ribbon -->
+<a href="https://github.com/hariwr25/inventory-erp-system" class="github-corner" aria-label="View source on GitHub" target="_blank">
+    <svg width="80" height="80" viewBox="0 0 250 250" style="fill:#0b1120; color:#fff; position: absolute; top: 0; border: 0; right: 0; z-index: 40;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+
+<div class="min-h-screen flex flex-col lg:flex-row">
+
+    <!-- ========== LEFT: BRAND / HERO ========== -->
+    <div class="relative lg:w-1/2 bg-[#0b1120] overflow-hidden flex flex-col justify-between p-8 lg:p-12 min-h-[240px] lg:min-h-screen">
+        
+        <!-- abstract grid overlay -->
+        <div class="absolute inset-0 pointer-events-none opacity-[0.06]">
+            <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <pattern id="grid-light" width="48" height="48" patternUnits="userSpaceOnUse">
+                        <path d="M 48 0 L 0 0 0 48" fill="none" stroke="white" stroke-width="0.6"/>
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid-light)" />
+            </svg>
+        </div>
+
+        <!-- decorative orbs -->
+        <div class="absolute top-[-80px] right-[-80px] w-80 h-80 bg-indigo-600/10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-[-60px] left-[-60px] w-72 h-72 bg-sky-500/10 rounded-full blur-3xl"></div>
+
+        <!-- content -->
+        <div class="relative z-10 flex flex-col h-full">
+            <!-- logo with Laravel badge -->
+            <div class="flex items-center gap-2.5 mb-14 lg:mb-24">
+                <div class="w-9 h-9 bg-white/90 rounded-xl flex items-center justify-center shadow-md">
+                    <svg class="w-5 h-5 text-[#0b1120]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M20 7v10a2 2 0 01-2 2H6a2 2 0 01-2-2V7m16 0l-4-4m4 4H4m8 4v4" />
+                    </svg>
+                </div>
+                <span class="text-xl font-semibold tracking-tight text-white/90">inventaris</span>
+                <span class="ml-2 text-[10px] font-mono bg-white/10 text-white/30 px-2 py-0.5 rounded-md border border-white/5">Laravel 11</span>
+            </div>
+
+            <!-- hero text -->
+            <div class="max-w-md space-y-4">
+                <h1 class="text-4xl lg:text-5xl font-bold text-white leading-[1.2]">
+                    Inventory management<br>
+                    <span class="text-white/50 font-normal">built with Laravel</span>
+                </h1>
+                <p class="text-white/40 text-base leading-relaxed pr-4">
+                    Full-featured inventory system with Eloquent ORM, Blade templating, and RESTful API architecture.
+                </p>
+                <!-- tech stack badges -->
+                <div class="flex flex-wrap gap-2 pt-2">
+                    <span class="text-[10px] bg-white/5 text-white/30 px-3 py-1 rounded-full border border-white/5">PHP 8.2</span>
+                    <span class="text-[10px] bg-white/5 text-white/30 px-3 py-1 rounded-full border border-white/5">MySQL</span>
+                    <span class="text-[10px] bg-white/5 text-white/30 px-3 py-1 rounded-full border border-white/5">Tailwind</span>
+                    <span class="text-[10px] bg-white/5 text-white/30 px-3 py-1 rounded-full border border-white/5">Livewire</span>
+                </div>
+                <!-- GitHub link in left panel -->
+                <div class="pt-4">
+                    <a href="https://github.com/hariwr25/inventory-erp-system" target="_blank" class="inline-flex items-center gap-2 text-xs text-white/30 hover:text-white/60 transition border border-white/10 hover:border-white/20 px-4 py-2 rounded-lg">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.15 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.62.24 2.85.12 3.15.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        View Full Source Code
+                    </a>
+                </div>
+            </div>
+
+            <!-- bottom: trust / social proof -->
+            <div class="mt-auto pt-8 lg:pt-12 border-t border-white/5">
+                <div class="flex flex-wrap items-center gap-5">
+                    <div class="flex -space-x-2.5">
+                        <div class="w-8 h-8 rounded-full bg-white/10 border-2 border-[#0b1120]"></div>
+                        <div class="w-8 h-8 rounded-full bg-white/10 border-2 border-[#0b1120]"></div>
+                        <div class="w-8 h-8 rounded-full bg-white/10 border-2 border-[#0b1120]"></div>
+                        <div class="w-8 h-8 rounded-full bg-white/10 border-2 border-[#0b1120] flex items-center justify-center text-[10px] font-medium text-white/40">+2k</div>
+                    </div>
+                    <span class="text-white/30 text-sm">used by 10,000+ teams worldwide</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== RIGHT: LOGIN FORM ========== -->
+    <div class="flex-1 lg:w-1/2 bg-white flex items-center justify-center p-6 lg:p-12">
+        <div class="w-full max-w-sm mx-auto">
+
+            <!-- mobile brand -->
+            <div class="lg:hidden flex flex-col items-center mb-8">
+                <div class="w-12 h-12 bg-[#0b1120] rounded-2xl flex items-center justify-center mb-3 shadow-sm">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M20 7v10a2 2 0 01-2 2H6a2 2 0 01-2-2V7m16 0l-4-4m4 4H4m8 4v4" />
+                    </svg>
+                </div>
+                <h2 class="text-xl font-semibold text-[#0b1120]">Welcome back</h2>
+                <p class="text-sm text-[#64748b] mt-0.5">sign in to your account</p>
+            </div>
+
+            <!-- form header -->
+            <div class="mb-8 hidden lg:block">
+                <h2 class="text-2xl font-semibold text-[#0b1120] tracking-tight">Sign in</h2>
+                <p class="text-sm text-[#64748b] mt-1">access your inventory dashboard</p>
+            </div>
+
+            <!-- Demo notice - clearly showing this is a frontend demo -->
+            <div class="mb-6 p-4 bg-amber-50/80 border border-amber-200/60 rounded-xl text-amber-800 text-sm">
+                <div class="flex items-start gap-3">
+                    <span class="text-amber-500 text-lg">📌</span>
+                    <div>
+                        <p class="font-medium text-amber-900">Frontend Demo</p>
+                        <p class="text-amber-700/80 text-xs mt-0.5">This is a static demo with dummy data. The full Laravel backend is available on GitHub.</p>
+                        <a href="https://github.com/hariwr25/inventory-erp-system" target="_blank" class="inline-flex items-center gap-1.5 mt-2 text-xs font-medium text-amber-900 hover:text-amber-700 underline-offset-2 hover:underline">
+                            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.15 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.62.24 2.85.12 3.15.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                            View on GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- login form with redirect -->
+            <form id="loginForm" action="#" method="POST" class="space-y-6" onsubmit="redirectToDashboard(event)">
+                <!-- email -->
+                <div>
+                    <label for="email" class="block text-sm font-medium text-[#1e293b] mb-1.5">Email address</label>
+                    <input id="email" type="email" name="email" value="demo@inventaris.co" required
+                           class="w-full px-4 py-2.5 bg-white border border-[#e2e8f0] rounded-xl text-sm placeholder:text-[#94a3b8] focus:border-[#0b1120] focus:ring-2 focus:ring-[#0b1120]/10 focus:outline-none transition-all duration-200"
+                           placeholder="name@company.com">
+                </div>
+
+                <!-- password -->
+                <div>
+                    <div class="flex items-center justify-between mb-1.5">
+                        <label for="password" class="block text-sm font-medium text-[#1e293b]">Password</label>
+                        <a href="#" class="text-xs text-[#64748b] hover:text-[#0b1120] transition font-medium">Forgot?</a>
+                    </div>
+                    <input id="password" type="password" name="password" value="••••••••" required
+                           class="w-full px-4 py-2.5 bg-white border border-[#e2e8f0] rounded-xl text-sm placeholder:text-[#94a3b8] focus:border-[#0b1120] focus:ring-2 focus:ring-[#0b1120]/10 focus:outline-none transition-all duration-200"
+                           placeholder="••••••••">
+                </div>
+
+                <!-- remember & submit -->
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-1">
+                    <label class="flex items-center gap-2 cursor-pointer text-sm text-[#475569] hover:text-[#0b1120]">
+                        <input type="checkbox" name="remember" checked class="w-4 h-4 rounded border-[#cbd5e1] text-[#0b1120] focus:ring-[#0b1120]/20 focus:ring-offset-0">
+                        <span>Keep me signed in</span>
+                    </label>
+                    <button type="submit" 
+                            class="w-full sm:w-auto py-2.5 px-7 bg-[#0b1120] hover:bg-[#1e293b] text-white text-sm font-medium rounded-xl transition-all shadow-sm hover:shadow-md active:scale-[0.98]">
+                        Sign in →
+                    </button>
+                </div>
+            </form>
+
+            <!-- divider with badge -->
+            <div class="relative my-8">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="w-full border-t border-[#e9edf4]"></div>
+                </div>
+                <div class="relative flex justify-center text-[10px] uppercase tracking-widest">
+                    <span class="px-3 bg-white text-[#94a3b8] font-medium">demo credentials</span>
+                </div>
+            </div>
+
+            <!-- dummy credentials info -->
+            <div class="text-center text-xs text-[#94a3b8] space-y-1 bg-[#f8fafc] rounded-xl p-4 border border-[#e9edf4]">
+                <p class="font-medium text-[#64748b]">Use any credentials to login</p>
+                <p class="text-[#94a3b8]">Email: <span class="text-[#0b1120] font-mono">demo@inventaris.co</span></p>
+                <p class="text-[#94a3b8]">Password: <span class="text-[#0b1120] font-mono">any password</span></p>
+            </div>
+
+            <!-- trust badges -->
+            <div class="flex flex-wrap items-center justify-center gap-5 text-[11px] text-[#94a3b8] font-medium mt-6">
+                <span class="flex items-center gap-1.5">🔒 SSL encrypted</span>
+                <span class="w-px h-4 bg-[#e9edf4]"></span>
+                <span class="flex items-center gap-1.5">✓ GDPR ready</span>
+                <span class="w-px h-4 bg-[#e9edf4]"></span>
+                <span class="flex items-center gap-1.5">🛡️ 2FA optional</span>
+            </div>
+
+            <!-- footer with GitHub link -->
+            <div class="mt-6 text-center border-t border-[#e9edf4] pt-6">
+                <p class="text-[11px] text-[#94a3b8]">
+                    Full Laravel backend available on 
+                    <a href="https://github.com/hariwr25/inventory-erp-system" target="_blank" class="text-[#0b1120] font-medium hover:underline underline-offset-2">
+                        GitHub
+                    </a>
+                </p>
+                <p class="text-[10px] text-[#cbd5e1] mt-1">v2.0 · inventory management · frontend demo</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- redirect function -->
+<script>
+    function redirectToDashboard(e) {
+        e.preventDefault();
+        window.location.href = "dashboard.html";
+    }
+</script>
+
+</body>
+</html>
