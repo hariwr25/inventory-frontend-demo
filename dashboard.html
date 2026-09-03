@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard · Inventaris</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+        body { background: #f8fafc; }
+        .demo-badge {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        /* Custom scrollbar */
+        .custom-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 10px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
+        }
+    </style>
+</head>
+<body class="antialiased text-[#0b1120] bg-[#f8fafc]">
+
+    <!-- Top Navbar -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Left side -->
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-8 h-8 bg-[#0b1120] rounded-lg flex items-center justify-center">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M20 7v10a2 2 0 01-2 2H6a2 2 0 01-2-2V7m16 0l-4-4m4 4H4m8 4v4" />
+                            </svg>
+                        </div>
+                        <span class="text-lg font-semibold text-[#0b1120]">inventaris</span>
+                    </div>
+                    <!-- DEMO BADGE - NAVBAR -->
+                    <span class="demo-badge px-2.5 py-0.5 text-[10px] font-mono font-medium bg-amber-100 text-amber-700 rounded-full border border-amber-200/60">
+                        ⚡ DEMO DATA
+                    </span>
+                </div>
+
+                <!-- Right side -->
+                <div class="flex items-center gap-4">
+                    <div class="text-sm text-gray-600 hidden sm:block">
+                        <span class="text-gray-400">Logged in as</span>
+                        <span class="font-medium text-gray-900">Hari Wicaksono</span>
+                    </div>
+                    <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-sm font-medium text-gray-700">
+                        HW
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- Welcome Section -->
+        <div class="mb-8">
+            <div class="flex items-center gap-3 flex-wrap">
+                <h1 class="text-2xl font-semibold text-gray-900">Good Afternoon, Hari Wicaksono!</h1>
+                <!-- DEMO BADGE - WELCOME -->
+                <span class="demo-badge px-2.5 py-0.5 text-[10px] font-mono font-medium bg-amber-100 text-amber-700 rounded-full border border-amber-200/60">
+                    ⚡ DEMO DATA
+                </span>
+            </div>
+            <p class="text-gray-500 mt-1">Here's what's happening with your inventory today. <span class="text-xs text-amber-600">(dummy data for demonstration)</span></p>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+            <!-- Total Products -->
+            <div class="bg-white rounded-xl border border-gray-200 p-5 hover:border-gray-300 transition-colors">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-500">Total Products</p>
+                        <p class="text-2xl font-semibold text-gray-900 mt-1">1,247</p>
+                        <p class="text-xs text-green-600 mt-2 flex items-center gap-1">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                            </svg>
+                            +12% from last month
+                        </p>
+                    </div>
+                    <div class="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7v10a2 2 0 01-2 2H6a2 2 0 01-2-2V7m16 0l-4-4m4 4H4m8 4v4"></path>
+                        </svg>
+                    </div>
+                </div>
+                <!-- small demo indicator -->
+                <div class="mt-3 text-[10px] text-amber-600/70 font-mono">⏺ demo data</div>
+            </div>
+
+            <!-- Total Stock -->
+            <div class="bg-white rounded-xl border border-gray-200 p-5 hover:border-gray-300 transition-colors">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-500">Total Stock</p>
+                        <p class="text-2xl font-semibold text-gray-900 mt-1">8,493</p>
+                        <p class="text-xs text-gray-500 mt-2">across all products</p>
+                    </div>
+                    <div class="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="mt-3 text-[10px] text-amber-600/70 font-mono">⏺ demo data</div>
+            </div>
+
+            <!-- Low Stock Alert -->
+            <div class="bg-white rounded-xl border border-gray-200 p-5 hover:border-gray-300 transition-colors">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-500">Low Stock</p>
+                        <p class="text-2xl font-semibold text-amber-600 mt-1">23</p>
+                        <p class="text-xs text-gray-500 mt-2">needs attention</p>
+                    </div>
+                    <div class="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="mt-3 text-[10px] text-amber-600/70 font-mono">⏺ demo data</div>
+            </div>
+
+            <!-- Total Value -->
+            <div class="bg-gray-900 rounded-xl p-5">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-400">Inventory Value</p>
+                        <p class="text-2xl font-semibold text-white mt-1">Rp 847,593,000</p>
+                        <p class="text-xs text-gray-500 mt-2">total assets</p>
+                    </div>
+                    <div class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center">
+                        <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="mt-3 text-[10px] text-gray-500 font-mono">⏺ demo data</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <!-- Stock Movement Chart -->
+            <div class="lg:col-span-2 bg-white rounded-xl border border-gray-200 p-5">
+                <div class="flex items-center justify-between mb-5">
+                    <div>
+                        <h3 class="font-semibold text-gray-900">Stock Movement</h3>
+                        <p class="text-sm text-gray-500 mt-0.5">Last 30 days <span class="text-amber-600 text-xs ml-2">(dummy data)</span></p>
+                    </div>
+                    <div class="flex gap-1">
+                        <button class="px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-50 rounded-md transition">Weekly</button>
+                        <button class="px-3 py-1.5 text-xs font-medium bg-gray-900 text-white rounded-md">Monthly</button>
+                    </div>
+                </div>
+                <canvas id="stockChart" height="220"></canvas>
+            </div>
+
+            <!-- Top Products -->
+            <div class="bg-white rounded-xl border border-gray-200 p-5">
+                <div class="mb-5">
+                    <h3 class="font-semibold text-gray-900">Best Sellers</h3>
+                    <p class="text-sm text-gray-500 mt-0.5">Top 5 products by sales <span class="text-amber-600 text-xs ml-2">(dummy)</span></p>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-xs font-medium text-gray-600">1</div>
+                            <div>
+                                <p class="font-medium text-gray-900 text-sm">Laptop Pro X</p>
+                                <p class="text-xs text-gray-500">units sold</p>
+                            </div>
+                        </div>
+                        <p class="font-semibold text-gray-900">342</p>
+                    </div>
+                    <div class="border-t border-gray-100"></div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-xs font-medium text-gray-600">2</div>
+                            <div>
+                                <p class="font-medium text-gray-900 text-sm">Wireless Mouse</p>
+                                <p class="text-xs text-gray-500">units sold</p>
+                            </div>
+                        </div>
+                        <p class="font-semibold text-gray-900">287</p>
+                    </div>
+                    <div class="border-t border-gray-100"></div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-xs font-medium text-gray-600">3</div>
+                            <div>
+                                <p class="font-medium text-gray-900 text-sm">Monitor 27"</p>
+                                <p class="text-xs text-gray-500">units sold</p>
+                            </div>
+                        </div>
+                        <p class="font-semibold text-gray-900">215</p>
+                    </div>
+                    <div class="border-t border-gray-100"></div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-xs font-medium text-gray-600">4</div>
+                            <div>
+                                <p class="font-medium text-gray-900 text-sm">Keyboard Mechanical</p>
+                                <p class="text-xs text-gray-500">units sold</p>
+                            </div>
+                        </div>
+                        <p class="font-semibold text-gray-900">189</p>
+                    </div>
+                    <div class="border-t border-gray-100"></div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-xs font-medium text-gray-600">5</div>
+                            <div>
+                                <p class="font-medium text-gray-900 text-sm">USB-C Hub</p>
+                                <p class="text-xs text-gray-500">units sold</p>
+                            </div>
+                        </div>
+                        <p class="font-semibold text-gray-900">156</p>
+                    </div>
+                </div>
+                <div class="mt-3 text-[10px] text-amber-600/70 font-mono text-center">⏺ demo data</div>
+            </div>
+        </div>
+
+        <!-- Recent Activity & Low Stock -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Recent Activity -->
+            <div class="bg-white rounded-xl border border-gray-200">
+                <div class="px-5 py-4 border-b border-gray-200">
+                    <h3 class="font-semibold text-gray-900">Recent Activity</h3>
+                    <p class="text-sm text-gray-500 mt-0.5">Latest stock transactions <span class="text-amber-600 text-xs ml-2">(dummy)</span></p>
+                </div>
+                <div class="p-5 custom-scroll max-h-[380px] overflow-y-auto">
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-3">
+                            <div class="flex-shrink-0">
+                                <div class="w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center justify-between">
+                                    <p class="font-medium text-gray-900 text-sm truncate">Laptop Pro X</p>
+                                    <span class="text-emerald-600 font-medium text-sm">+50</span>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">Restock from supplier</p>
+                                <p class="text-xs text-gray-400 mt-1">2 hours ago</p>
+                            </div>
+                        </div>
+                        <div class="border-t border-gray-100"></div>
+                        <div class="flex items-start gap-3">
+                            <div class="flex-shrink-0">
+                                <div class="w-8 h-8 bg-red-50 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center justify-between">
+                                    <p class="font-medium text-gray-900 text-sm truncate">Wireless Mouse</p>
+                                    <span class="text-red-600 font-medium text-sm">-12</span>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">Order #INV-2024-001</p>
+                                <p class="text-xs text-gray-400 mt-1">5 hours ago</p>
+                            </div>
+                        </div>
+                        <div class="border-t border-gray-100"></div>
+                        <div class="flex items-start gap-3">
+                            <div class="flex-shrink-0">
+                                <div class="w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center justify-between">
+                                    <p class="font-medium text-gray-900 text-sm truncate">Monitor 27"</p>
+                                    <span class="text-emerald-600 font-medium text-sm">+30</span>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">Stock adjustment</p>
+                                <p class="text-xs text-gray-400 mt-1">1 day ago</p>
+                            </div>
+                        </div>
+                        <div class="border-t border-gray-100"></div>
+                        <div class="flex items-start gap-3">
+                            <div class="flex-shrink-0">
+                                <div class="w-8 h-8 bg-red-50 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center justify-between">
+                                    <p class="font-medium text-gray-900 text-sm truncate">Keyboard Mechanical</p>
+                                    <span class="text-red-600 font-medium text-sm">-8</span>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">Order #INV-2024-002</p>
+                                <p class="text-xs text-gray-400 mt-1">2 days ago</p>
+                            </div>
+                        </div>
+                        <div class="border-t border-gray-100"></div>
+                        <div class="flex items-start gap-3">
+                            <div class="flex-shrink-0">
+                                <div class="w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center justify-between">
+                                    <p class="font-medium text-gray-900 text-sm truncate">USB-C Hub</p>
+                                    <span class="text-emerald-600 font-medium text-sm">+25</span>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">Restock from supplier</p>
+                                <p class="text-xs text-gray-400 mt-1">3 days ago</p>
+                            </div>
+                        </div>
+                        <div class="border-t border-gray-100"></div>
+                        <div class="flex items-start gap-3">
+                            <div class="flex-shrink-0">
+                                <div class="w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center justify-between">
+                                    <p class="font-medium text-gray-900 text-sm truncate">Laptop Pro X</p>
+                                    <span class="text-emerald-600 font-medium text-sm">+15</span>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-1">Stock transfer from warehouse</p>
+                                <p class="text-xs text-gray-400 mt-1">4 days ago</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3 text-[10px] text-amber-600/70 font-mono text-center">⏺ demo data</div>
+                </div>
+            </div>
+
+            <!-- Low Stock Products -->
+            <div class="bg-white rounded-xl border border-gray-200">
+                <div class="px-5 py-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="font-semibold text-gray-900">Low Stock Alert</h3>
+                            <p class="text-sm text-gray-500 mt-0.5">Products that need restock <span class="text-amber-600 text-xs ml-2">(dummy)</span></p>
+                        </div>
+                        <span class="px-2 py-1 text-xs font-medium bg-amber-100 text-amber-700 rounded-md">3 items</span>
+                    </div>
+                </div>
+                <div class="p-5">
+                    <div class="space-y-3">
+                        <div class="bg-amber-50 rounded-lg p-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <p class="font-medium text-gray-900">Wireless Mouse</p>
+                                <p class="text-amber-700 font-medium">8 left</p>
+                            </div>
+                            <div class="w-full bg-amber-100 rounded-full h-1.5 mb-3">
+                                <div class="bg-amber-500 h-1.5 rounded-full" style="width: 40%"></div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <p class="text-xs text-gray-500">Min stock: 20</p>
+                                <a href="#" class="text-sm text-blue-600 hover:text-blue-700 font-medium">Restock →</a>
+                            </div>
+                        </div>
+                        <div class="bg-amber-50 rounded-lg p-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <p class="font-medium text-gray-900">Keyboard Mechanical</p>
+                                <p class="text-amber-700 font-medium">5 left</p>
+                            </div>
+                            <div class="w-full bg-amber-100 rounded-full h-1.5 mb-3">
+                                <div class="bg-amber-500 h-1.5 rounded-full" style="width: 25%"></div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <p class="text-xs text-gray-500">Min stock: 15</p>
+                                <a href="#" class="text-sm text-blue-600 hover:text-blue-700 font-medium">Restock →</a>
+                            </div>
+                        </div>
+                        <div class="bg-amber-50 rounded-lg p-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <p class="font-medium text-gray-900">USB-C Hub</p>
+                                <p class="text-amber-700 font-medium">12 left</p>
+                            </div>
+                            <div class="w-full bg-amber-100 rounded-full h-1.5 mb-3">
+                                <div class="bg-amber-500 h-1.5 rounded-full" style="width: 60%"></div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <p class="text-xs text-gray-500">Min stock: 25</p>
+                                <a href="#" class="text-sm text-blue-600 hover:text-blue-700 font-medium">Restock →</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3 text-[10px] text-amber-600/70 font-mono text-center">⏺ demo data</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Demo Notice -->
+        <div class="mt-8 text-center border-t border-gray-200 pt-6">
+            <p class="text-xs text-gray-400">
+                ⚡ This is a static demo with dummy data. 
+                <a href="https://github.com/hariwr25/inventory-erp-system" target="_blank" class="text-[#0b1120] font-medium hover:underline underline-offset-2">
+                    View full Laravel source code on GitHub
+                </a>
+            </p>
+            <p class="text-[10px] text-gray-400 mt-1">Inventory Management System · Laravel 11 · Demo Frontend</p>
+        </div>
+    </div>
+
+    <!-- Chart Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('stockChart')?.getContext('2d');
+            if (ctx) {
+                // Dummy data for last 30 days
+                const dates = [];
+                const stockInData = [];
+                const stockOutData = [];
+                
+                for (let i = 29; i >= 0; i--) {
+                    const date = new Date();
+                    date.setDate(date.getDate() - i);
+                    dates.push(date);
+                    
+                    // Generate random data with some pattern
+                    const baseIn = 40 + Math.floor(Math.random() * 80);
+                    const baseOut = 30 + Math.floor(Math.random() * 60);
+                    
+                    // Add some weekly pattern
+                    const dayOfWeek = date.getDay();
+                    if (dayOfWeek === 0 || dayOfWeek === 6) {
+                        // Weekend - lower activity
+                        stockInData.push(Math.floor(baseIn * 0.6));
+                        stockOutData.push(Math.floor(baseOut * 0.5));
+                    } else if (dayOfWeek === 1) {
+                        // Monday - higher stock in
+                        stockInData.push(Math.floor(baseIn * 1.4));
+                        stockOutData.push(Math.floor(baseOut * 0.9));
+                    } else {
+                        stockInData.push(baseIn);
+                        stockOutData.push(baseOut);
+                    }
+                }
+
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: dates.map(d => d.toLocaleDateString('en-US', {day:'numeric', month:'short'})),
+                        datasets: [
+                            {
+                                label: 'Stock In',
+                                data: stockInData,
+                                borderColor: '#059669',
+                                backgroundColor: 'rgba(5, 150, 105, 0.04)',
+                                borderWidth: 2,
+                                tension: 0.4,
+                                fill: true,
+                                pointBackgroundColor: '#059669',
+                                pointBorderColor: '#fff',
+                                pointBorderWidth: 2,
+                                pointRadius: 3,
+                                pointHoverRadius: 5
+                            },
+                            {
+                                label: 'Stock Out',
+                                data: stockOutData,
+                                borderColor: '#DC2626',
+                                backgroundColor: 'rgba(220, 38, 38, 0.04)',
+                                borderWidth: 2,
+                                tension: 0.4,
+                                fill: true,
+                                pointBackgroundColor: '#DC2626',
+                                pointBorderColor: '#fff',
+                                pointBorderWidth: 2,
+                                pointRadius: 3,
+                                pointHoverRadius: 5
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    usePointStyle: true,
+                                    boxWidth: 6,
+                                    padding: 12,
+                                    font: { size: 11 }
+                                }
+                            },
+                            tooltip: {
+                                mode: 'index',
+                                intersect: false,
+                                backgroundColor: '#1F2937',
+                                titleColor: '#F9FAFB',
+                                bodyColor: '#D1D5DB',
+                                padding: 8,
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.dataset.label + ': ' + context.parsed.y.toLocaleString();
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: '#F3F4F6',
+                                    drawBorder: false
+                                },
+                                ticks: {
+                                    font: { size: 11 },
+                                    callback: function(value) {
+                                        return value.toLocaleString();
+                                    }
+                                }
+                            },
+                            x: {
+                                grid: { display: false },
+                                ticks: { 
+                                    font: { size: 10 },
+                                    maxTicksLimit: 15
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
